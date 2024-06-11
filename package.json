@@ -1,0 +1,19 @@
+{
+  "name": "gallery",
+  "version": "1.0.0",
+  "description": "Dùng để làm thư viện ảnh ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "steve",
+    "gallery"
+  ],
+  "author": "huuhieu17",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "sharp": "^0.33.4"
+  }
+}

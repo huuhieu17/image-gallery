@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steve Gallery</title>
+    <link rel="stylesheet" href="https://unpkg.com/nanogallery2/dist/css/nanogallery2.min.css">
+</head>
+
+<body>
+    <div id="nanogallery2"></div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://unpkg.com/nanogallery2/dist/jquery.nanogallery2.min.js"></script>
+
+    <script>
+        document.addEventListener('touchstart', function (e) {
+            e.preventDefault();
+        }, { passive: false });
+        $(document).ready(function () {
+            $.getJSON('/images', function (data) {
+                let items = data.map((image, index) => ({
+                    src: image.src,
+                    srct: image.srct, // Thumbnail
+                }));
+
+                var gallery = $('#nanogallery2').nanogallery2({
+                    items: items,
+                    "thumbnailWidth": "200",
+                    "thumbnailHeight": "auto",
+                    thumbnailLazyLoad: true, // Enable lazy loading
+                    thumbnailBorderHorizontal: 0,
+                    thumbnailBorderVertical: 0,
+                    thumbnailDisplayTransition: 'scaleUp',
+                    thumbnailDisplayTransitionDuration: 500,
+                    thumbnailDisplayInterval: 30,
+                    imageTransition: "swipe",
+                    fnImgDisplayed: function (img) {
+                        const { mediaNumber } = img ?? {}
+                        // Update hash when image changes
+                        window.location.hash = 'steve-' + mediaNumber;
+                    }
+                });
+
+                $(window).on('hashchange', function () {
+                    var hash = window.location.hash;
+                    if (hash.startsWith('#steve-')) {
+                        var imgIndex = parseInt(hash.substring('#steve-'.length));
+                        gallery.nanogallery2('displayItem', imgIndex);
+                    }
+                });
+
+                // Check hash on page load
+                var hash = window.location.hash;
+                if (hash.startsWith('#steve-')) {
+                    var imgIndex = parseInt(hash.substring('#steve-'.length));
+                    gallery.nanogallery2('displayItem', imgIndex);
+                }
+            });
+
+
+        });
+    </script>
+</body>
+
+</html>
