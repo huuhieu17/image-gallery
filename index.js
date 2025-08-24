@@ -13,6 +13,7 @@ const thumbnailSize = 350;
 // Function to create a thumbnail
 const createThumbnail = (inputPath, outputPath) => {
   return sharp(inputPath)
+    .rotate()
     .resize(thumbnailSize, thumbnailSize, { fit: 'inside' })
     .toFile(outputPath);
 };
